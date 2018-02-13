@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>HTML Woojin's First Work</title>
+
+		<script type="text/javascript">
+
+			var maxBookCount=100000;
+			var bookCount=0;
+			var index=0;
+			function createBook() {
+				var bookName="";
+				var authorName="";
+				var publisherName="";
+			}
+			var bookArray = new Array(maxBookCount);
+			for(var i=0; i<bookArray.length; i++) {
+				bookArray[i] = new createBook();
+				bookArray[i].bookName="";
+				bookArray[i].authorName="";
+				bookArray[i].publisherName="";
+			}
+
+			function addBook() {
+
+				var name=document.getElementById("bookNameTxt").value;
+				var author=document.getElementById("authorNameTxt").value;
+				var publisher=document.getElementById("publisherNameTxt").value;
+				if(name=="" || author=="" || publisher ==""){
+					alert("하나라도 비어있는 칸이 있으면 추가를 할 수  없습니다..\n만약 정말 모른다면 unknown 이라고 적어주세요! ");
+				}
+				else {
+					for(var i =0;i<maxBookCount;i++) {
+						if (name===bookArray[i].bookName 
+							&& author===bookArray[i].authorName 
+							&& publisher===bookArray[i].publisherName) {
+								alert("이미 저장되있는 책입니다.");
+								return;
+						}
+
+						if(bookArray[i].bookName==="")	{
+							bookArray[i].bookName=document.getElementById("bookNameTxt").value;
+							bookArray[i].authorName=document.getElementById("authorNameTxt").value;
+							bookArray[i].publisherName=document.getElementById("publisherNameTxt").value;
+							index =[i];
+							break;
+						}
+					}
+					bookCount++;
+
+					document.getElementById("addResulDiv").innerText="총"+bookCount+"권의 책, \n방금추가된 책 : "+bookArray[index].bookName;
+				}
+			}
+
+			function searchAll() {
+				var content=""
+
+				for(var i=0; i<maxBookCount; i++) {
+					var number=i+1;
+					if(bookArray[i].bookName!==""){
+						content=content+number+". 도서명: "+bookArray[i].bookName
+												+", 저자: "+bookArray[i].authorName
+												+", 출판사: "+bookArray[i].publisherName+"\n";
+					}
+				}
+				var resultHead="조회 결과 : 총"+bookCount+"권\n";
+				var result= resultHead+content;
+
+				if(bookCount==0) {
+					document.getElementById("searchAllResultDiv").innerText= "책이 한권도 없습니다."
+				} else {
+					document.getElementById("searchAllResultDiv").innerText = result;
+	
+				}
+			}
+
+			function searchByBookName() {
+				var content=""
+				var matchCount=1;
+
+				for(var i=0; i<maxBookCount; i++) {
+					var a = document.getElementById("bookNameSearchTxt").value+"";
+					var b = bookArray[i].bookName+"";
+					if(a=="") {
+						alert("아무것도 입력하지 않으셨습니다.");
+						return;
+					}
+
+					if(b.match(a)) {
+							content=content+ matchCount+". 도서명: "+bookArray[i].bookName
+													+", 저자: "+bookArray[i].authorName
+													+", 출판사: "+bookArray[i].publisherName+"\n";
+							matchCount++;
+					}
+				}
+				var matchCountResult=matchCount-1;
+				var resultHead="조회 결과 : 총"+matchCountResult+"권\n";
+				var result= resultHead+content;
+
+				if(matchCount==1) {
+					document.getElementById("searchByBookNameResultDiv").innerText= "검색조건에 맞는 책이 없습니다."
+				} else {
+					document.getElementById("searchByBookNameResultDiv").innerText = result;
+	
+				}
+			}
+
+			function searchByAuthorName() {
+				var content=""
+				var matchCount=1;
+
+				for(var i=0; i<maxBookCount; i++) {
+					var a = document.getElementById("authorNameSearchTxt").value+"";
+					var b = bookArray[i].authorName+"";
+					if(a=="") {
+						alert("아무것도 입력하지 않으셨습니다.");
+						return;
+					}
+
+					if(b.match(a)) {
+							content=content+ matchCount+". 도서명: "+bookArray[i].bookName
+													+", 저자: "+bookArray[i].authorName
+													+", 출판사: "+bookArray[i].publisherName+"\n";
+							matchCount++;
+					}
+				}
+				var matchCountResult=matchCount-1;
+				var resultHead="조회 결과 : 총"+matchCountResult+"권\n";
+				var result= resultHead+content;
+
+				if(matchCount==1) {
+					document.getElementById("searchByAuthorNameResultDiv").innerText= "검색조건에 맞는 책이 없습니다."
+				} else {
+					document.getElementById("searchByAuthorNameResultDiv").innerText = result;
+				}
+			}
+
+			function searchByPublisherName() {
+				var content=""
+				var matchCount=1;
+
+				for(var i=0; i<maxBookCount; i++) {
+					var a = document.getElementById("publisherNameSearchTxt").value+"";
+					var b = bookArray[i].publisherName+"";
+					if(a=="") {
+						alert("아무것도 입력하지 않으셨습니다.");
+						return;
+					}
+
+					if(b.match(a)) {
+							content=content+ matchCount+". 도서명: "+bookArray[i].bookName
+													+", 저자: "+bookArray[i].authorName
+													+", 출판사: "+bookArray[i].publisherName+"\n";
+							matchCount++;
+					}
+				}
+				var matchCountResult=matchCount-1;
+				var resultHead="조회 결과 : 총"+matchCountResult+"권\n";
+				var result= resultHead+content;
+
+				if(matchCount==1) {
+					document.getElementById("searchByPublisherNameResultDiv").innerText= "검색조건에 맞는 책이 없습니다."
+				} else {
+					document.getElementById("searchByPublisherNameResultDiv").innerText = result;
+				}
+			}
+
+			function deleteAll () {
+				for(var i=0; i<maxBookCount; i++) {
+						bookArray[i].bookName="";
+						bookArray[i].authorName="";
+						bookArray[i].publisherName="";
+						bookCount=0;
+				}
+				document.getElementById("addResulDiv").innerText="새 책을 추가해 주세요."
+
+				document.getElementById("searchAllResultDiv").innerText="삭제되었습니다."
+			}
+
+			function deleteByBookName() {
+				for(var i=0; i<maxBookCount; i++) {
+					var a = document.getElementById("bookNameSearchTxt").value+"";
+					var b = bookArray[i].bookName+"";
+					if(a=="") {
+						alert("아무것도 입력하지 않으셨습니다.");
+						return;
+					}
+
+					if(b.match(a)) {
+							bookArray[i].bookName="";
+							bookArray[i].authorName="";
+							bookArray[i].publisherName="";
+							bookCount--;
+					}
+				}
+				document.getElementById("searchByBookNameResultDiv").innerText="삭제되었습니다."
+			}
+
+		</script>
+	</head>
+
+	<body>
+		<h1><i>도서조회 시스템 by 김우진</i></h1>
+		<fieldset style="width: 300px; border: solid;" >
+			<legend><h2>도서정보</h2></legend>
+
+			<p>&nbsp;도서명 &nbsp;&nbsp;  
+				<input type="text" id="bookNameTxt" placeholder="ex) 자바스크립트 입문">
+			</p>
+			<p>&nbsp;저자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="text" id="authorNameTxt" placeholder="ex) 김우진">
+			</p>
+			<p>&nbsp;출판사 &nbsp;&nbsp;  
+				<input type="text" id="publisherNameTxt" placeholder="ex) lg출판사">
+			</p>
+
+			<button id="addBookBtn" onclick="addBook();">
+				본 정보로 도서추가</button>
+			<div id="addResulDiv">추가된 책 제목 : </div>
+
+		</fieldset>
+		<fieldset style="width: 400px">
+			<legend><h3>제목으로 도서조회</h3></legend>
+
+			<div>&nbsp;도서명 &nbsp;&nbsp;  
+				<input type="text" id="bookNameSearchTxt" placeholder="ex) 자바스크립트 입문">
+				<button id="searchByBookNameBtn" onclick="searchByBookName();">조회</button>
+				<button id="deleteByBookNameBtn" onclick="deleteByBookName();">삭제</button>
+				<div id="searchByBookNameResultDiv"><b>조회결과 : <b></div>
+			</div>
+
+		</fieldset>
+		<fieldset style="width: 400px">
+			<legend><h3>저자명으로 도서조회</h3></legend>
+
+			<div>&nbsp;저자명 &nbsp;&nbsp;  
+				<input type="text" id="authorNameSearchTxt" placeholder="ex) 김우진">
+				<button id="searchByAuthorNameBtn" onclick="searchByAuthorName();">조회</button>
+				<div id="searchByAuthorNameResultDiv">조회결과 : </div>
+			</div>
+
+		</fieldset>
+		<fieldset style="width:400px">
+			<legend><h3>출판사로 도서조회</h3></legend>
+
+			<div>&nbsp;출판사명  
+				<input type="text" id="publisherNameSearchTxt" placeholder="ex) lg출판사">
+				<button id="searchByPublisherNameBtn" onclick="searchByPublisherName();">조회</button>
+				<div id="searchByPublisherNameResultDiv">조회결과 : </div>
+			</div>
+
+		</fieldset>
+
+		<p>
+			<button id="searchAllBtn" onclick="searchAll();">전체 책 조회</button>
+			<button id="deleteAllBtn" onclick="deleteAll();">전체 책 삭제</button>
+		</p>
+		<div id="searchAllResultDiv">조회결과 : </div>
+	</body>
+</html> 
